@@ -43,9 +43,9 @@ const ActivityForm = ({
           onBlur={(e) => {
             let value = parseFloat(e.target.value);
             if (isNaN(value) || value < 0) {
-              e.target.value = "0"; // If empty or negative, reset to 0
+              e.target.value = "0";
             } else {
-              e.target.value = value.toFixed(2); // Ensure two decimal places
+              e.target.value = value.toFixed(2);
             }
           }}
         />

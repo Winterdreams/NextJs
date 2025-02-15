@@ -45,6 +45,9 @@ const Home = () => {
 
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">Activities List</h2>
+        
+        <p className="text-lg font-semibold mb-2">Total Activities: {activities.length}</p>
+
         <ul className="space-y-2">
           {activities.map((activity, index) => (
             <li key={index} className="p-4 border rounded-md">
