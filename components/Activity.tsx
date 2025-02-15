@@ -11,7 +11,7 @@ const ActivityForm = ({
   accessibility = 0.5,
   onSubmit,
 }: ActivityFormDataProps) => {
-  const { register, handleSubmit, reset, setValue } = useForm<ActivityFormData>();
+  const { register, handleSubmit, reset, setValue } = useForm<ActivityFormDataProps>();
 
   useEffect(() => {
     setValue("activity", activity);

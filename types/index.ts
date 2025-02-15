@@ -8,7 +8,7 @@ export type ActivityFormData = {
     type: string;
     bookingRequired: boolean;
     accessibility: number;
-};
+  };
 
 export type ActivityFormDataProps = {
     activity?: string;
@@ -16,7 +16,5 @@ export type ActivityFormDataProps = {
     type?: string;
     bookingRequired?: boolean;
     accessibility?: number;
-    handleClick?: MouseEventHandler<HTMLButtonElement>;
-    btnType?: "button" | "submit" ;
     onSubmit: SubmitHandler<ActivityFormData>;
   };
