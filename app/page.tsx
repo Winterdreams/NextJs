@@ -1,13 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ActivityFormData } from "@/types";
 import ActivityForm from "@/components/Activity";
+
+const LOCAL_STORAGE_KEY = "activityList";
 
 const Home = () => {
   const [activities, setActivities] = useState<ActivityFormData[]>([]);
   const [editingActivity, setEditingActivity] = useState<ActivityFormData | null>(null);
 
-  // Handle form submission
+  //handle form submission
   const handleSubmit = (data: ActivityFormData) => {
     if (editingActivity) {
       setActivities((prev) =>
@@ -30,6 +32,19 @@ const Home = () => {
       prev.filter((activity) => activity !== activityToDelete)
     );
   };
+
+  //load activities from local storage
+  useEffect(() => {
+    const savedActivities = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedActivities) {
+      setActivities(JSON.parse(savedActivities));
+    }
+  }, []);
+
+  //save activities to local storage
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(activities));
+  }, [activities]);
 
   return (
     <div className="container mx-auto p-4">
