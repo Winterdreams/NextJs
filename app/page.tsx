@@ -1,16 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ActivityFormData } from "@/types";
-import ActivityForm from "@/components/Activity";
+import { ActivityFormDataProps } from "@/types";
+import ActivityForm from "@/components/ActivityForm";
+import ActivityList from "@/components/ActivityList";
+import Header from "@/components/Header";
 
 const LOCAL_STORAGE_KEY = "activityList";
 
-const Home = () => {
-  const [activities, setActivities] = useState<ActivityFormData[]>([]);
-  const [editingActivity, setEditingActivity] = useState<ActivityFormData | null>(null);
+const HomePage = () => {
+  const [activities, setActivities] = useState<ActivityFormDataProps[]>([]);
+  const [editingActivity, setEditingActivity] = useState<ActivityFormDataProps | null>(null);
 
   //handle form submission
-  const handleSubmit = (data: ActivityFormData) => {
+  const handleSubmit = (data: ActivityFormDataProps) => {
     if (editingActivity) {
       setActivities((prev) =>
         prev.map((activity) =>
@@ -23,11 +25,11 @@ const Home = () => {
     }
   };
 
-  const handleEdit = (activity: ActivityFormData) => {
+  const handleEdit = (activity: ActivityFormDataProps) => {
     setEditingActivity(activity);
   };
 
-  const handleDelete = (activityToDelete: ActivityFormData) => {
+  const handleDelete = (activityToDelete: ActivityFormDataProps) => {
     setActivities((prev) =>
       prev.filter((activity) => activity !== activityToDelete)
     );
@@ -47,7 +49,10 @@ const Home = () => {
   }, [activities]);
 
   return (
+    <>
     <div className="container mx-auto p-4">
+      <Header />
+
       <h1 className="text-2xl font-bold mb-4">Activity Manager</h1>
       <ActivityForm
         activity={editingActivity?.activity}
@@ -58,39 +63,10 @@ const Home = () => {
         onSubmit={handleSubmit}
       />
 
-      <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Activities List</h2>
-        
-        <p className="text-lg font-semibold mb-2">Total Activities: {activities.length}</p>
-
-        <ul className="space-y-2">
-          {activities.map((activity, index) => (
-            <li key={index} className="p-4 border rounded-md">
-              <p><strong>Activity:</strong> {activity.activity}</p>
-              <p><strong>Price:</strong> ${activity.price}</p>
-              <p><strong>Type:</strong> {activity.type}</p>
-              <p><strong>Booking Required:</strong> {activity.bookingRequired ? "Yes" : "No"}</p>
-              <p><strong>Accessibility:</strong> {activity.accessibility}</p>
-              <div className="mt-2 space-x-2">
-                <button
-                  onClick={() => handleEdit(activity)}
-                  className="mt-2 px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-                >
-                  Edit
-                </button>
-                <button
-                    onClick={() => handleDelete(activity)}
-                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                >
-                    Delete
-                  </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ActivityList activities={activities} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
+    </>
   );
 };
 
-export default Home;
+export default HomePage;
